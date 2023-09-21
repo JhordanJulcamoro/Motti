@@ -1,0 +1,39 @@
+# Archivos generados automáticamente
+/build
+build/
+captures/
+.gradle/
+local.properties
+
+# Archivos generados por IDE
+.idea/
+*.iml
+*.iws
+*.log
+
+# Archivos binarios y archivos de recursos generados
+app/build/
+build/intermediates/
+build/outputs/
+app/release/
+*.apk
+*.ap_
+*.dex
+
+# Archivos de configuración de Gradle
+.gradle
+gradle-wrapper.properties
+gradle-wrapper.jar
+
+# Directorio de dependencias de Maven
+.m2/
+
+# Sistema de archivos de respaldo
+*~
+
+# Archivos de configuración local (generalmente, estos deben manejarse por separado)
+proguard-rules.pro
+google-services.json
+
+# Directorios y archivos de construcción específicos del proyecto
+# (Añade cualquier otro archivo o directorio específico de tu proyecto aquí)
