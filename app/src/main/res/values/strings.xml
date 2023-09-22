@@ -7,4 +7,10 @@
     <string name="logout">Logout</string>
     <string name="register">Register</string>
     <string name="click_to_login">Click to login</string>
+    <string name="repeat_password">repeat password</string>
+    <string name="enter_password">Enter password</string>
+    <string name="password_not_equals">Password not equals</string>
+    <string name="enter_email">Enter email</string>
+    <string name="surnames_is_empty">Surnames is empty</string>
+    <string name="names_is_empty">Names is empty</string>
 </resources>

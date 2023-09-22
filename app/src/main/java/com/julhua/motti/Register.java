@@ -21,11 +21,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Register extends AppCompatActivity {
 
-    TextInputEditText editTextEmail, editTextPassword;
+    TextInputEditText editTextEmail, editTextPassword, editTextUserNames, editTextUserSurnames, editTextPasswordConfirm;
     Button buttonReg;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
-    TextView textView;
+    TextView textView, textViewMessageError;
 
     @Override
     public void onStart() {
@@ -47,9 +47,13 @@ public class Register extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
+        editTextUserNames = findViewById(R.id.user_names);
+        editTextUserSurnames = findViewById(R.id.user_surnames);
+        editTextPasswordConfirm = findViewById(R.id.password_confirm);
         buttonReg = findViewById(R.id.btn_register);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.loginNow);
+        textViewMessageError = findViewById(R.id.message_error);
 
 
         textView.setOnClickListener(new View.OnClickListener() {
@@ -65,17 +69,51 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                String email, password;
+                textViewMessageError.setVisibility(View.GONE);
+                String email, password, passwordConfirm, name, surname;
+                name = editTextUserNames.getText().toString();
+                surname = editTextUserSurnames.getText().toString();
                 email = editTextEmail.getText().toString();
                 password = editTextPassword.getText().toString();
+                passwordConfirm = editTextPasswordConfirm.getText().toString();
+
+                if (TextUtils.isEmpty(name)) {
+//                    Toast.makeText(Register.this, R.string.enter_email, Toast.LENGTH_SHORT).show();
+                    textViewMessageError.setVisibility(View.VISIBLE);
+                    textViewMessageError.setText(R.string.names_is_empty);
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                }
+
+                if (TextUtils.isEmpty(surname)) {
+//                    Toast.makeText(Register.this, R.string.enter_email, Toast.LENGTH_SHORT).show();
+                    textViewMessageError.setVisibility(View.VISIBLE);
+                    textViewMessageError.setText(R.string.surnames_is_empty);
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                }
 
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(Register.this, "Enter email", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Register.this, R.string.enter_email, Toast.LENGTH_SHORT).show();
+                    textViewMessageError.setVisibility(View.VISIBLE);
+                    textViewMessageError.setText(R.string.enter_email);
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(Register.this, "Enter password", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Register.this, R.string.enter_password, Toast.LENGTH_SHORT).show();
+                    textViewMessageError.setVisibility(View.VISIBLE);
+                    textViewMessageError.setText(R.string.enter_password);
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                }
+
+                if (!password.equals(passwordConfirm)){
+//                    Toast.makeText(Register.this, R.string.password_not_equals, Toast.LENGTH_SHORT).show();
+                    textViewMessageError.setVisibility(View.VISIBLE);
+                    textViewMessageError.setText(R.string.password_not_equals);
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
@@ -97,4 +135,5 @@ public class Register extends AppCompatActivity {
             }
         });
     }
+
 }
