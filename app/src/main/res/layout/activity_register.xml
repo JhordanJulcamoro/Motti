@@ -15,6 +15,7 @@
         android:text="@string/register"
         android:textSize="25dp"
         android:textStyle="bold" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,9 +84,35 @@
             android:layout_height="wrap_content"
             android:hint="@string/repeat_password"
             android:inputType="textPassword"/>
+
     </com.google.android.material.textfield.TextInputLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        >
 
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <RadioButton
+                android:id="@+id/driver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/driver" />
+
+            <RadioButton
+                android:id="@+id/passenger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/passenger" />
+        </RadioGroup>
+    </LinearLayout>
 
 
     <ProgressBar
