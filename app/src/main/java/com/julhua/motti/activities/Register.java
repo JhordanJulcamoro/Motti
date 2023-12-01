@@ -1,4 +1,4 @@
-package com.julhua.motti;
+package com.julhua.motti.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,10 +24,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.julhua.motti.R;
+import com.julhua.motti.activities.driver.MapDriverActivity;
 import com.julhua.motti.user.User;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
@@ -46,7 +45,8 @@ public class Register extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MapDriverActivity.class);
             startActivity(intent);
             finish();
         }
@@ -144,6 +144,7 @@ public class Register extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                             registra_firestore_database(name, surname, isDriver, isPassenger);
+
                             Toast.makeText(Register.this, R.string.account_created, Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), Login.class);
                             startActivity(intent);
