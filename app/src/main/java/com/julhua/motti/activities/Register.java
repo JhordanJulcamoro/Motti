@@ -39,13 +39,14 @@ public class Register extends AppCompatActivity {
     TextView textView, textViewMessageError;
     RadioButton radioButtonDriver, radioButtonPassenger;
     private User user;
+
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            // Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             Intent intent = new Intent(getApplicationContext(), MapDriverActivity.class);
             startActivity(intent);
             finish();
@@ -70,7 +71,6 @@ public class Register extends AppCompatActivity {
         textViewMessageError = findViewById(R.id.message_error);
         radioButtonDriver = findViewById(R.id.driver);
         radioButtonPassenger = findViewById(R.id.passenger);
-
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,42 +138,43 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
-                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressBar.setVisibility(View.GONE);
-                        if (task.isSuccessful()) {
-                            registra_firestore_database(name, surname, isDriver, isPassenger);
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                progressBar.setVisibility(View.GONE);
+                                if (task.isSuccessful()) {
+                                    String userId = mAuth.getCurrentUser().getUid();
+                                    registra_firestore_database(userId, name, surname, isDriver, isPassenger);
 
-                            Toast.makeText(Register.this, R.string.account_created, Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), Login.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            textViewMessageError.setVisibility(View.VISIBLE);
-                            textViewMessageError.setText(R.string.authentication_failed);
-                        }
-                    }
-                });
+                                    Toast.makeText(Register.this, R.string.account_created, Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    textViewMessageError.setVisibility(View.VISIBLE);
+                                    textViewMessageError.setText(R.string.authentication_failed);
+                                }
+                            }
+                        });
             }
         });
     }
 
-    private void registra_firestore_database(String name, String surname, boolean isDriver, boolean isPassenger) {
-        user = new User(name,surname,isDriver,isPassenger);
-        db.collection("user").
-                add(user).
-                addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, String.format(getString(R.string.user_register_in_database)));
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, String.format(getString(R.string.user_not_register_in_database)));
-                    }
-                });
+    private void registra_firestore_database(String uID, String name, String surname, boolean isDriver,
+            boolean isPassenger) {
+        user = new User(name, surname, isDriver, isPassenger);
+        db.collection("user").document(uID).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(TAG, String.format(getString(R.string.user_register_in_database)));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, String.format(getString(R.string.user_not_register_in_database)));
+            }
+        });
 
     }
 
