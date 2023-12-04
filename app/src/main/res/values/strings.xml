@@ -19,4 +19,5 @@
     <string name="passenger">Passenger</string>
     <string name="user_register_in_database">User register in database</string>
     <string name="user_not_register_in_database">User not register in database</string>
+    <string name="cerrar_sesion">Cerrar sesion</string>
 </resources>
